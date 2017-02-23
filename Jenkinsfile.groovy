@@ -4,7 +4,7 @@ import groovy.json.JsonSlurperClassic
 node {
     env.AWS_DEFAULT_REGION = 'ap-southeast-1'
 	
-	def applicationName = 'hendrawan-app' //change me
+	def applicationName = 'hendrawan-app'
 	def deploymentGroupName = 'rian-app-group' // change me
 	def s3BucketName = 'deployment-cdc'
 	
@@ -13,16 +13,7 @@ node {
 
 	stage('Checkout') {
 		checkout scm	
-	}
-	
-	
-	stage("Sonar Analyze") {
-		def scannerHome = tool 'default';
-	    withSonarQubeEnv('default') {
-	      sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${deploymentGroupName} -Dsonar.sources=app"
-	    }
-	}
-	
+	}	
 
 	stage('Deploy') {
 		withCredentials([[$class          : 'UsernamePasswordMultiBinding',
